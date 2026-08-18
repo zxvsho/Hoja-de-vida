@@ -1,0 +1,339 @@
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&display=swap");
+
+:root {
+  --bg: #14141c;
+  --bg-panel: #1c1c28;
+  --bg-panel-2: #21212f;
+  --border: #33334a;
+  --texto: #cdd3e0;
+  --texto-suave: #8a8fa3;
+  --acento-morado: #b48ce8;
+  --acento-rosa: #f2a4c7;
+  --acento-verde: #8fd6a6;
+  --acento-azul: #7fb4e8;
+  --acento-naranja: #f2b880;
+  --prompt: #6fe0a8;
+  --font: "JetBrains Mono", "Fira Code", Consolas, monospace;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  background-image:
+    radial-gradient(circle at 20% 10%, rgba(180, 140, 232, 0.06), transparent 40%),
+    radial-gradient(circle at 85% 60%, rgba(127, 180, 232, 0.05), transparent 40%);
+  color: var(--texto);
+  line-height: 1.7;
+}
+
+header {
+  background: var(--bg-panel);
+  border-bottom: 1px solid var(--border);
+  color: var(--texto);
+  padding: 0.9rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+header .logo {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--acento-verde);
+  letter-spacing: 0.5px;
+}
+
+header .logo::before {
+  content: "~/ ";
+  color: var(--texto-suave);
+}
+
+header .logo::after {
+  content: "_";
+  color: var(--prompt);
+  animation: parpadeo 1.1s step-end infinite;
+}
+
+@keyframes parpadeo {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+nav a {
+  color: var(--texto-suave);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.9rem;
+  padding: 0.4rem 0.9rem;
+  border-radius: 4px;
+  border: 1px solid transparent;
+  transition: all 0.15s ease;
+}
+
+nav a:hover {
+  color: var(--acento-morado);
+  border-color: var(--border);
+  background: var(--bg-panel-2);
+}
+
+nav a.activo {
+  color: var(--bg);
+  background: var(--acento-verde);
+  font-weight: 700;
+}
+
+.hero {
+  background: var(--bg-panel);
+  border-bottom: 1px solid var(--border);
+  color: var(--texto);
+  text-align: center;
+  padding: 3.5rem 1.5rem;
+  position: relative;
+}
+
+.hero img {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 2px solid var(--acento-morado);
+  box-shadow: 0 0 0 4px var(--bg), 0 0 24px rgba(180, 140, 232, 0.25);
+  margin-bottom: 1.4rem;
+}
+
+.hero h1 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+  color: var(--texto);
+}
+
+.hero h1::before {
+  content: "> ";
+  color: var(--prompt);
+}
+
+.hero p {
+  font-size: 0.95rem;
+  color: var(--texto-suave);
+}
+
+main {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem;
+}
+
+.tarjeta {
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0;
+  margin-bottom: 1.6rem;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+
+.tarjeta::before {
+  content: "\25CF \25CF \25CF";
+  display: block;
+  background: var(--bg-panel-2);
+  color: var(--border);
+  font-size: 0.7rem;
+  letter-spacing: 4px;
+  padding: 0.6rem 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.tarjeta > h2,
+.tarjeta > p,
+.tarjeta > ul,
+.tarjeta > form {
+  margin-left: 1.6rem;
+  margin-right: 1.6rem;
+}
+
+.tarjeta > h2:first-of-type {
+  margin-top: 1.4rem;
+}
+
+.tarjeta > *:last-child {
+  margin-bottom: 1.6rem;
+}
+
+.tarjeta h2 {
+  color: var(--acento-morado);
+  font-size: 1.05rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.tarjeta h2::before {
+  content: "# ";
+  color: var(--texto-suave);
+}
+
+.tarjeta ul {
+  padding-left: 1.3rem;
+  color: var(--texto);
+}
+
+.tarjeta ul li::marker {
+  color: var(--acento-verde);
+}
+
+.tarjeta p {
+  color: var(--texto);
+}
+
+.grid-dos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+@media (max-width: 650px) {
+  .grid-dos {
+    grid-template-columns: 1fr;
+  }
+  header {
+    flex-direction: column;
+    gap: 0.8rem;
+    text-align: center;
+  }
+}
+
+.linea-tiempo {
+  border-left: 2px solid var(--acento-azul);
+  padding-left: 1.1rem;
+  margin-bottom: 1.3rem;
+}
+
+.linea-tiempo h3 {
+  color: var(--acento-azul);
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.linea-tiempo h3::before {
+  content: "$ ";
+  color: var(--prompt);
+}
+
+.linea-tiempo p {
+  color: var(--texto-suave);
+  font-size: 0.9rem;
+}
+
+.etiqueta {
+  display: inline-block;
+  background: var(--bg-panel-2);
+  color: var(--acento-verde);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.3rem 0.8rem;
+  margin: 0.25rem;
+  font-size: 0.82rem;
+  font-family: var(--font);
+}
+
+.etiqueta::before {
+  content: "#";
+  color: var(--texto-suave);
+  margin-right: 2px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+input,
+textarea {
+  padding: 0.7rem 0.9rem;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--bg-panel-2);
+  color: var(--texto);
+  font-family: var(--font);
+  font-size: 0.9rem;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--texto-suave);
+}
+
+input:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--acento-morado);
+}
+
+button {
+  background: var(--acento-verde);
+  color: var(--bg);
+  border: none;
+  padding: 0.75rem;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  font-family: var(--font);
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+button::before {
+  content: "> ";
+}
+
+button:hover {
+  opacity: 0.85;
+}
+
+footer {
+  background: var(--bg-panel);
+  border-top: 1px solid var(--border);
+  color: var(--texto-suave);
+  text-align: center;
+  padding: 1.2rem;
+  font-size: 0.85rem;
+}
+
+footer p::before {
+  content: "// ";
+  color: var(--border);
+}
+
+.contacto-lista a {
+  color: var(--acento-azul);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.contacto-lista a:hover {
+  color: var(--acento-rosa);
+}
+
+.contacto-lista li {
+  margin-bottom: 0.6rem;
+  color: var(--texto);
+}
