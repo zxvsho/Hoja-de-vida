@@ -1,4 +1,16 @@
 $(function () {
+  // Selector de temas de color (estilo Omarchy)
+  var TEMA_KEY = "temaPreferido";
+  var $selectorTema = $("#temaSelect");
+  var temaActual = localStorage.getItem(TEMA_KEY) || "violeta";
+  $selectorTema.val(temaActual);
+
+  $selectorTema.on("change", function () {
+    var tema = $(this).val();
+    document.documentElement.setAttribute("data-theme", tema);
+    localStorage.setItem(TEMA_KEY, tema);
+  });
+
   // Aparición escalonada de las tarjetas al cargar la página
   $(".tarjeta").each(function (i) {
     var $tarjeta = $(this);
