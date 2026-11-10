@@ -101,18 +101,26 @@ test('keeps unknown API routes as JSON 404 responses', async () => {
 });
 
 test('handles browser CORS preflight requests', async () => {
-  const response = await fetch(`${origin}/api/auth/login`, {
-    method: 'OPTIONS',
-    headers: {
-      Origin: 'https://zxvsho.github.io',
-      'Access-Control-Request-Method': 'POST',
-      'Access-Control-Request-Headers': 'content-type',
-    },
-  });
-  assert.equal(response.status, 204);
-  assert.equal(
-    response.headers.get('access-control-allow-origin'),
-    'https://zxvsho.github.io',
-  );
-  assert.equal(response.headers.get('access-control-allow-credentials'), 'true');
+  for (const [path, method] of [
+    ['/api/auth/login', 'POST'],
+    ['/api/auth/logout', 'POST'],
+    ['/api/experiencias', 'POST'],
+    ['/api/experiencias/example-id', 'PUT'],
+    ['/api/experiencias/example-id', 'DELETE'],
+  ]) {
+    const response = await fetch(`${origin}${path}`, {
+      method: 'OPTIONS',
+      headers: {
+        Origin: 'https://zxvsho.github.io',
+        'Access-Control-Request-Method': method,
+        'Access-Control-Request-Headers': 'content-type',
+      },
+    });
+    assert.equal(response.status, 204, `${method} ${path}`);
+    assert.equal(
+      response.headers.get('access-control-allow-origin'),
+      'https://zxvsho.github.io',
+    );
+    assert.equal(response.headers.get('access-control-allow-credentials'), 'true');
+  }
 });

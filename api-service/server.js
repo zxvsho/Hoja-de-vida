@@ -17,7 +17,10 @@ const allowedOrigins = (process.env.CORS_ORIGIN || 'https://zxvsho.github.io')
 app.set('trust proxy', 1);
 const corsOptions = { origin: allowedOrigins, credentials: true };
 app.use(cors(corsOptions));
-app.options('*', cors(corsOptions));
+app.options('/api/auth/login', cors(corsOptions));
+app.options('/api/auth/logout', cors(corsOptions));
+app.options('/api/experiencias', cors(corsOptions));
+app.options('/api/experiencias/:id', cors(corsOptions));
 app.use(express.json({ limit: '20kb' }));
 app.use(cookieParser());
 
