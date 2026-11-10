@@ -15,7 +15,9 @@ const allowedOrigins = (process.env.CORS_ORIGIN || 'https://zxvsho.github.io')
   .filter(Boolean);
 
 app.set('trust proxy', 1);
-app.use(cors({ origin: allowedOrigins, credentials: true }));
+const corsOptions = { origin: allowedOrigins, credentials: true };
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));
 app.use(express.json({ limit: '20kb' }));
 app.use(cookieParser());
 

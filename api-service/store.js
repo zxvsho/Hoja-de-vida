@@ -9,7 +9,7 @@ function assertBlobConfigured() {
 }
 
 async function getBlobJson(pathname) {
-  const blob = await get(pathname, { access: 'private' });
+  const blob = await get(pathname, { access: 'private', useCache: false });
   if (!blob) return null;
   if (blob.statusCode !== 200) {
     throw new Error(`No se pudo leer el registro (${blob.statusCode}).`);

@@ -99,3 +99,20 @@ test('keeps unknown API routes as JSON 404 responses', async () => {
   assert.equal(response.status, 404);
   assert.match(response.headers.get('content-type'), /application\/json/);
 });
+
+test('handles browser CORS preflight requests', async () => {
+  const response = await fetch(`${origin}/api/auth/login`, {
+    method: 'OPTIONS',
+    headers: {
+      Origin: 'https://zxvsho.github.io',
+      'Access-Control-Request-Method': 'POST',
+      'Access-Control-Request-Headers': 'content-type',
+    },
+  });
+  assert.equal(response.status, 204);
+  assert.equal(
+    response.headers.get('access-control-allow-origin'),
+    'https://zxvsho.github.io',
+  );
+  assert.equal(response.headers.get('access-control-allow-credentials'), 'true');
+});
