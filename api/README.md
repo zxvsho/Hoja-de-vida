@@ -1,38 +1,39 @@
-# API Experiencias Profesionales
+# API de experiencias profesionales
 
-CRUD de experiencias para la hoja de vida. Node.js + Express + MongoDB (Mongoose).
+API REST de Node.js, Express y MongoDB. En Render, el mismo servicio también
+sirve la aplicación React compilada; la conexión a MongoDB Atlas persiste los
+datos incluso cuando el servicio se reinicia.
 
-## Uso
+## Variables de entorno
 
-```bash
-npm install
-cp .env.example .env
-npm run dev
-```
+Consulta [.env.example](./.env.example). `MONGO_URI`, `ADMIN_PASSWORD` y un
+`JWT_SECRET` aleatorio con un mínimo de 32 caracteres son obligatorios. No
+guardes credenciales reales en Git.
 
-Documentación y pruebas con Swagger: http://localhost:3000/api-docs
+## Rutas
 
-## Endpoints
-
-| Método | Ruta | Descripción |
+| Método | Ruta | Acceso |
 |---|---|---|
-| POST | /api/experiencias | Crear |
-| GET | /api/experiencias | Listar |
-| GET | /api/experiencias/:id | Obtener una |
-| PUT | /api/experiencias/:id | Actualizar |
-| DELETE | /api/experiencias/:id | Eliminar |
+| GET | `/api/health` | Público; indica si MongoDB está conectado |
+| POST | `/api/auth/login` | Público; inicia sesión con la contraseña administrativa |
+| GET | `/api/auth/session` | Sesión administrativa |
+| POST | `/api/auth/logout` | Sesión administrativa |
+| GET | `/api/experiencias` | Público |
+| GET | `/api/experiencias/:id` | Público |
+| POST | `/api/experiencias` | Sesión administrativa |
+| PUT | `/api/experiencias/:id` | Sesión administrativa |
+| DELETE | `/api/experiencias/:id` | Sesión administrativa |
 
-## Ejemplo (POST)
+El inicio de sesión establece una cookie firmada, HttpOnly y con expiración
+de ocho horas. Los intentos fallidos están limitados para reducir ataques de
+fuerza bruta.
 
-```json
-{
-  "empresa": "Empresa SAS",
-  "cargo": "Desarrollador Backend",
-  "descripcion": "Desarrollo de APIs REST",
-  "ubicacion": "Cartagena, Colombia",
-  "fechaInicio": "2025-01-15",
-  "fechaFin": "2025-06-30",
-  "actual": false,
-  "tecnologias": ["Node.js", "Express", "MongoDB"]
-}
+## Ejecución y comprobaciones
+
+```sh
+npm ci
+npm test
+npm start
 ```
+
+La documentación Swagger está disponible en `/api-docs`.

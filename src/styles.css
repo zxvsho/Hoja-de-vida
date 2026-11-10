@@ -1,0 +1,304 @@
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.nav-container {
+  gap: 1rem;
+}
+
+.logo {
+  text-decoration: none;
+}
+
+.site-nav ul {
+  margin: 0;
+  padding: 0;
+}
+
+.site-nav a.activo {
+  color: var(--bg);
+}
+
+.menu-toggle {
+  display: none;
+  flex: 0 0 auto;
+  min-width: 44px;
+  margin: 0;
+}
+
+.admin-session {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  color: var(--texto-suave);
+  font-size: 0.85rem;
+}
+
+.admin-session button {
+  margin: 0;
+}
+
+.menu-toggle::before {
+  content: "";
+}
+
+.hero {
+  padding: 2.8rem 1.5rem;
+}
+
+.hero h1 {
+  margin-top: 0;
+}
+
+.tarjeta > p:first-of-type,
+.tarjeta > ul:first-of-type,
+.tarjeta > form:first-of-type {
+  margin-top: 1.4rem;
+}
+
+.tarjeta .contacto-lista {
+  margin-top: 1.4rem;
+}
+
+.grid-dos {
+  align-items: start;
+}
+
+.experience-meta {
+  color: var(--texto-suave) !important;
+}
+
+.admin-main {
+  max-width: 1000px;
+}
+
+.admin-form,
+.contact-form {
+  margin: 1.2rem 1.6rem 1.6rem;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin-bottom: 0.9rem;
+}
+
+.field label,
+.contact-form label {
+  color: var(--texto);
+  font-size: 0.86rem;
+  font-weight: 600;
+}
+
+.field input,
+.field textarea,
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+}
+
+.field input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.field small,
+.form-note {
+  color: var(--texto-suave);
+  font-size: 0.78rem;
+}
+
+.checkbox-field {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0.3rem 0 1rem;
+  font-size: 0.9rem;
+}
+
+.checkbox-field input {
+  width: 1rem;
+  height: 1rem;
+  accent-color: var(--acento-verde);
+}
+
+.form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+}
+
+.form-actions button {
+  margin-top: 0;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.secondary-button {
+  color: var(--texto);
+  background: var(--bg-panel-2);
+  border: 1px solid var(--border);
+}
+
+.secondary-button::before,
+.danger-button::before {
+  content: "";
+}
+
+.danger-button {
+  color: var(--bg);
+  background: var(--acento-rosa);
+}
+
+.alert {
+  margin: 0.5rem 0 1rem;
+  padding: 0.7rem 0.9rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  overflow-wrap: anywhere;
+}
+
+.error-alert {
+  color: var(--acento-rosa);
+  background: var(--bg-panel-2);
+  border: 1px solid var(--acento-rosa);
+}
+
+.success-alert,
+.form-status {
+  color: var(--acento-verde);
+  font-size: 0.85rem;
+}
+
+.mensaje-error.visible {
+  margin: 0.8rem 1.6rem;
+}
+
+.form-status {
+  min-height: 1.2rem;
+}
+
+.form-note {
+  margin: 0 1.6rem 1.4rem;
+}
+
+.admin-list > h2 {
+  color: var(--acento-morado);
+  font-size: 1.15rem;
+  margin-bottom: 1rem;
+}
+
+.admin-experience {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.2rem;
+  margin-bottom: 0.8rem;
+}
+
+.admin-experience h3 {
+  color: var(--acento-azul);
+  font-size: 0.95rem;
+}
+
+.admin-experience p {
+  color: var(--texto-suave);
+  font-size: 0.82rem;
+  margin: 0.25rem 0 0;
+}
+
+.contact-form {
+  gap: 0.45rem;
+}
+
+.contact-form button {
+  margin-top: 0.5rem;
+}
+
+#btnArriba {
+  margin: 0;
+}
+
+#btnArriba::before {
+  content: "";
+}
+
+@media (max-width: 767.98px) {
+  header.navbar {
+    padding: 0.8rem 1rem;
+  }
+
+  .nav-container {
+    gap: 0.7rem;
+  }
+
+  .nav-controles {
+    margin-left: auto;
+  }
+
+  .menu-toggle {
+    display: inline-block;
+    padding: 0.4rem 0.65rem;
+  }
+
+  .site-nav {
+    display: none;
+    width: 100%;
+  }
+
+  .site-nav.menu-abierto {
+    display: block;
+  }
+
+  .site-nav ul {
+    flex-direction: column;
+    width: 100%;
+    padding-top: 0.6rem;
+  }
+
+  .site-nav li,
+  .site-nav a {
+    width: 100%;
+  }
+
+  .site-nav a {
+    display: block;
+    text-align: center;
+  }
+}
+
+@media (max-width: 650px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .admin-experience {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
