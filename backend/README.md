@@ -1,8 +1,8 @@
 # API de experiencias profesionales
 
-API REST de Node.js, Express y MongoDB. En Render, el mismo servicio también
-sirve la aplicación React compilada; la conexión a MongoDB Atlas persiste los
-datos incluso cuando el servicio se reinicia.
+API REST de Node.js, Express y MongoDB. Puede ejecutarse como servicio Express
+en Render o como función serverless en Vercel. MongoDB Atlas persiste los datos
+incluso cuando el servicio se reinicia.
 
 ## Variables de entorno
 

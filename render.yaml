@@ -3,8 +3,8 @@ services:
     name: zxvsho-hoja-de-vida
     runtime: node
     plan: free
-    buildCommand: npm ci && npm --prefix api ci && npm run build
-    startCommand: npm --prefix api start
+    buildCommand: npm ci && npm --prefix backend ci && npm run build
+    startCommand: npm --prefix backend start
     healthCheckPath: /api/health
     envVars:
       - key: NODE_ENV

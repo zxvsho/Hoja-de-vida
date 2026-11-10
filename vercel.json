@@ -1,0 +1,6 @@
+{
+  "framework": "vite",
+  "installCommand": "npm ci && npm --prefix backend ci",
+  "buildCommand": "VITE_ROUTER_MODE=hash npm run build",
+  "outputDirectory": "dist"
+}

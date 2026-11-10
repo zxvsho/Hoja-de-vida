@@ -38,14 +38,46 @@ El Blueprint permite el origen GitHub Pages en CORS. El plan gratuito de Render
 puede suspender el servicio tras un periodo sin uso; la primera solicitud puede
 tardar mientras se reactiva.
 
+## Despliegue en Vercel
+
+Vercel puede alojar el sitio React y la API bajo el mismo dominio. El archivo
+[vercel.json](./vercel.json) configura el build, las rutas hash y la función
+serverless de la API. MongoDB Atlas sigue siendo necesario para guardar los
+datos.
+
+1. Crea un cluster en MongoDB Atlas y un usuario de base de datos. En **Network
+   Access**, permite el acceso desde Vercel; en planes sin IP estática suele
+   usarse `0.0.0.0/0`, por lo que debes proteger la base con credenciales
+   fuertes y limitar los permisos del usuario.
+2. En Vercel selecciona **Add New → Project**, importa
+   `zxvsho/Hoja-de-vida` desde GitHub y deja la raíz del proyecto como `./`.
+   Vercel detectará `vercel.json`; no cambies el directorio raíz.
+3. Antes de desplegar, agrega estas variables del proyecto en Vercel para
+   Production (y Preview si también quieres probar allí):
+   - `MONGO_URI`: URI de conexión de Atlas, con la contraseña del usuario
+     incluida.
+   - `ADMIN_PASSWORD`: contraseña administrativa larga y exclusiva.
+   - `JWT_SECRET`: secreto aleatorio de al menos 32 caracteres.
+4. Pulsa **Deploy**. Vercel instala las dependencias de la web y de la API,
+   construye React y publica la función en `/api/*`.
+5. Abre `https://TU-PROYECTO.vercel.app/api/health`. Debe responder JSON con
+   `"status":"ok"` y `"database":"connected"`. Luego abre
+   `https://TU-PROYECTO.vercel.app/#/experiencias` y
+   `https://TU-PROYECTO.vercel.app/#/admin`.
+
+No hace falta configurar `VITE_API_URL`: el sitio llama a `/api` en el mismo
+dominio. No pongas `MONGO_URI`, `ADMIN_PASSWORD` ni `JWT_SECRET` en GitHub,
+en el código ni en variables `VITE_*`.
+
 ## Desarrollo local
 
-Requiere Node.js 20.19 o posterior y MongoDB. En `api/.env`, configura
+Requiere Node.js 20.19 o posterior y MongoDB. En `backend/.env`, configura
 `MONGO_URI`, `ADMIN_PASSWORD` y un `JWT_SECRET` aleatorio de al menos 32
-caracteres usando como guía [api/.env.example](./api/.env.example).
+caracteres usando como guía [backend/.env.example](./backend/.env.example).
 
-Inicia la API desde `api/` con `npm ci && npm run dev` y Vite desde la raíz con
-`npm ci && npm run dev`. Vite redirige `/api` a la API local. No se requiere
+Instala dependencias con `npm ci` en la raíz y `npm --prefix backend ci`.
+Luego inicia la API con `npm --prefix backend run dev` y Vite con `npm run dev`
+en dos terminales. Vite redirige `/api` a la API local. No se requiere
 `VITE_API_URL` para desarrollo; la variable del repositorio se usa para la
 compilación de GitHub Pages.
 
@@ -66,7 +98,7 @@ contraseña de administración ni la URI de MongoDB.
 
 ```sh
 npm run build
-npm --prefix api test
+npm --prefix backend test
 ```
 
 ## Evidencia del CRUD

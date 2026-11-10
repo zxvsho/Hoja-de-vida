@@ -23,7 +23,11 @@ const adminPassword = process.env.ADMIN_PASSWORD;
 
 app.set('trust proxy', 1);
 app.use(cors({ origin: allowedOrigins, credentials: true }));
-app.use(express.json({ limit: '20kb' }));
+const jsonParser = express.json({ limit: '20kb' });
+app.use((req, res, next) => {
+  if (req.body !== undefined) return next();
+  jsonParser(req, res, next);
+});
 app.use(cookieParser());
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 

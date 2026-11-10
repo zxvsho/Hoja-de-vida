@@ -4,3 +4,5 @@ dist/
 .env.local
 api/.env
 api/node_modules/
+backend/.env
+backend/node_modules/
