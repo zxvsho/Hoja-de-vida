@@ -3,6 +3,7 @@ const { after, before, test } = require('node:test');
 
 process.env.ADMIN_PASSWORD = 'a-test-password';
 process.env.JWT_SECRET = 'test-secret-with-at-least-32-characters';
+process.env.NODE_ENV = 'production';
 
 const { app } = require('./server');
 let server;
@@ -56,7 +57,8 @@ test('creates an HttpOnly admin session and can end it', async () => {
   });
   assert.equal(login.status, 200);
   assert.match(login.headers.get('set-cookie'), /HttpOnly/i);
-  assert.match(login.headers.get('set-cookie'), /SameSite=Lax/i);
+  assert.match(login.headers.get('set-cookie'), /SameSite=None/i);
+  assert.match(login.headers.get('set-cookie'), /Secure/i);
   const cookie = login.headers.get('set-cookie').split(';', 1)[0];
 
   const session = await fetch(`${origin}/api/auth/session`, {

@@ -12,7 +12,7 @@ const swaggerUi = require('swagger-ui-express');
 const swaggerSpec = require('./swagger');
 
 const app = express();
-const allowedOrigins = (process.env.CORS_ORIGIN || 'http://localhost:5173,http://127.0.0.1:5173')
+const allowedOrigins = (process.env.CORS_ORIGIN || 'https://zxvsho.github.io,http://localhost:5173,http://127.0.0.1:5173')
   .split(',')
   .map((origin) => origin.trim())
   .filter(Boolean);
@@ -80,7 +80,7 @@ app.post('/api/auth/login', loginLimiter, (req, res) => {
   res.cookie(cookieName, token, {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
-    sameSite: 'lax',
+    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
     maxAge: sessionDurationMs,
     path: '/api',
   });
@@ -99,7 +99,7 @@ app.post('/api/auth/logout', (req, res) => {
   res.clearCookie(cookieName, {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
-    sameSite: 'lax',
+    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
     path: '/api',
   });
   res.json({ authenticated: false });

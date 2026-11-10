@@ -1,55 +1,53 @@
 # Hoja de vida
 
-Sitio web en React y Vite, servido junto con la API Express. Las experiencias
-se guardan en MongoDB Atlas: una vez desplegado, el sitio y su API funcionan
+Sitio web en React y Vite. El sitio público se publica en GitHub Pages; la API
+Express puede alojarse en Render con MongoDB Atlas para que el CRUD funcione
 sin dejar un servidor activo en tu computadora.
 
-## Publicar en internet (Render + MongoDB Atlas)
+## GitHub Pages
 
-1. Crea un cluster de MongoDB Atlas y un usuario de base de datos. En el acceso
-   de red de Atlas permite la conexión desde Render; en el plan gratuito de
-   Render normalmente se requiere permitir `0.0.0.0/0`, por lo que debes usar
-   una contraseña larga y exclusiva para el usuario de base de datos.
-2. En Render importa el repositorio de GitHub como un **Blueprint**. Render
-   detecta [render.yaml](./render.yaml), compila React y ejecuta la API en el
-   mismo servicio.
-3. En la configuración del servicio, introduce `MONGO_URI` con la URI de Atlas
-   y define una `ADMIN_PASSWORD` larga y exclusiva. Render genera
-   automáticamente `JWT_SECRET`; nunca guardes estos valores en el repositorio.
-4. Cuando finalice el despliegue, abre `https://zxvsho-hoja-de-vida.onrender.com`.
-   La API está en `/api/experiencias`, el estado en `/api/health`, Swagger en
-   `/api-docs` y el panel administrativo en `/admin`.
+El workflow [Deploy portfolio to GitHub Pages](./.github/workflows/pages.yml)
+compila React/Vite y publica `dist/` cada vez que se actualiza `main`. La página
+está en <https://zxvsho.github.io/Hoja-de-vida/>. Usa rutas con `#` para que
+las páginas internas funcionen al recargar GitHub Pages.
 
-[Iniciar el despliegue en Render](https://render.com/deploy?repo=https%3A%2F%2Fgithub.com%2Fzxvsho%2FHoja-de-vida)
+GitHub Pages solo sirve archivos estáticos: no ejecuta Node.js ni MongoDB. Las
+páginas de inicio, perfil, estudios y contacto funcionan sin un servidor API.
+La página de experiencias necesita la API para obtener el listado; `/admin`
+necesita además la API y su contraseña administrativa.
 
-El plan gratuito de Render puede suspender el servicio tras un periodo sin uso;
-la primera visita posterior puede tardar mientras vuelve a arrancar. Para
-mantenerlo siempre activo se necesita un plan de alojamiento que no suspenda
-el servicio.
+## API en Render + datos en MongoDB Atlas
+
+1. Crea un cluster de MongoDB Atlas y un usuario de base de datos. Copia la URI
+   de conexión de Atlas.
+2. Despliega este repositorio en Render usando el Blueprint
+   [render.yaml](./render.yaml):
+   [Iniciar despliegue en Render](https://render.com/deploy?repo=https%3A%2F%2Fgithub.com%2Fzxvsho%2FHoja-de-vida).
+3. En Render configura `MONGO_URI` con la URI de Atlas y `ADMIN_PASSWORD` con
+   una contraseña larga y exclusiva. Render genera `JWT_SECRET`.
+4. En los ajustes del repositorio de GitHub abre **Settings → Secrets and
+   variables → Actions → Variables** y crea `VITE_API_URL` con la URL base del
+   CRUD, por ejemplo `https://NOMBRE-DEL-SERVICIO.onrender.com/api/experiencias`.
+   Esta variable es pública en el JavaScript del sitio; no pongas contraseñas
+   ni credenciales de MongoDB ahí.
+5. Espera a que termine el despliegue de la API en Render y ejecuta
+   **Actions → Deploy portfolio to GitHub Pages → Run workflow** para compilar
+   la página con la URL de API correcta.
+
+El Blueprint permite el origen GitHub Pages en CORS. El plan gratuito de Render
+puede suspender el servicio tras un periodo sin uso; la primera solicitud puede
+tardar mientras se reactiva.
 
 ## Desarrollo local
 
-Requiere Node.js 20.19 o posterior y una URI de MongoDB. En `api/.env`, configura
+Requiere Node.js 20.19 o posterior y MongoDB. En `api/.env`, configura
 `MONGO_URI`, `ADMIN_PASSWORD` y un `JWT_SECRET` aleatorio de al menos 32
 caracteres usando como guía [api/.env.example](./api/.env.example).
 
-En una terminal inicia la API:
-
-```sh
-cd api
-npm ci
-npm run dev
-```
-
-En otra terminal, desde la raíz, inicia Vite:
-
-```sh
-npm ci
-npm run dev
-```
-
-Vite redirige `/api` a la API local. No se requiere `VITE_API_URL` durante el
-desarrollo ni en el despliegue de Render.
+Inicia la API desde `api/` con `npm ci && npm run dev` y Vite desde la raíz con
+`npm ci && npm run dev`. Vite redirige `/api` a la API local. No se requiere
+`VITE_API_URL` para desarrollo; la variable del repositorio se usa para la
+compilación de GitHub Pages.
 
 ## Rutas
 
